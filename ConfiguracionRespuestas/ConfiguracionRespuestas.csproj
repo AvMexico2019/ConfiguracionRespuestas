@@ -404,6 +404,7 @@
       <LastGenOutput>ModelosContrato.cs</LastGenOutput>
     </Content>
     <Content Include="SQL\Creacion y copia de Sandbox.sql" />
+    <Content Include="SQL\spuInicializacionRespuesstas.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
