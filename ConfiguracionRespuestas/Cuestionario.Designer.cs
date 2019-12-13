@@ -37,7 +37,6 @@
             this.comboBoxIdConcepto = new System.Windows.Forms.ComboBox();
             this.comboBoxIdRespuesta = new System.Windows.Forms.ComboBox();
             this.textBoxNumOrden = new System.Windows.Forms.TextBox();
-            this.textBoxEsDeterminante = new System.Windows.Forms.TextBox();
             this.textBoxValorRespuesta = new System.Windows.Forms.TextBox();
             this.textBoxValorMinimo = new System.Windows.Forms.TextBox();
             this.textBoxValorMaximo = new System.Windows.Forms.TextBox();
@@ -61,6 +60,10 @@
             this.labelInfo = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
+            this.comboBoxEsDeterminante = new System.Windows.Forms.ComboBox();
+            this.labelFechaRegistro = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboBoxTema
@@ -137,13 +140,6 @@
             this.textBoxNumOrden.Name = "textBoxNumOrden";
             this.textBoxNumOrden.Size = new System.Drawing.Size(374, 20);
             this.textBoxNumOrden.TabIndex = 9;
-            // 
-            // textBoxEsDeterminante
-            // 
-            this.textBoxEsDeterminante.Location = new System.Drawing.Point(574, 189);
-            this.textBoxEsDeterminante.Name = "textBoxEsDeterminante";
-            this.textBoxEsDeterminante.Size = new System.Drawing.Size(374, 20);
-            this.textBoxEsDeterminante.TabIndex = 10;
             // 
             // textBoxValorRespuesta
             // 
@@ -344,11 +340,49 @@
             this.label4.TabIndex = 34;
             this.label4.Text = "Hay que correr manualmete el SQL que inicializa el SandBox";
             // 
+            // domainUpDown1
+            // 
+            this.domainUpDown1.Location = new System.Drawing.Point(342, 0);
+            this.domainUpDown1.Name = "domainUpDown1";
+            this.domainUpDown1.Size = new System.Drawing.Size(8, 20);
+            this.domainUpDown1.TabIndex = 35;
+            this.domainUpDown1.Text = "domainUpDown1";
+            // 
+            // comboBoxEsDeterminante
+            // 
+            this.comboBoxEsDeterminante.FormattingEnabled = true;
+            this.comboBoxEsDeterminante.Location = new System.Drawing.Point(574, 189);
+            this.comboBoxEsDeterminante.Name = "comboBoxEsDeterminante";
+            this.comboBoxEsDeterminante.Size = new System.Drawing.Size(374, 21);
+            this.comboBoxEsDeterminante.TabIndex = 36;
+            // 
+            // labelFechaRegistro
+            // 
+            this.labelFechaRegistro.AutoSize = true;
+            this.labelFechaRegistro.Location = new System.Drawing.Point(574, 380);
+            this.labelFechaRegistro.Name = "labelFechaRegistro";
+            this.labelFechaRegistro.Size = new System.Drawing.Size(79, 13);
+            this.labelFechaRegistro.TabIndex = 37;
+            this.labelFechaRegistro.Text = "Fecha Registro";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(448, 379);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(79, 13);
+            this.label16.TabIndex = 38;
+            this.label16.Text = "Fecha Registro";
+            // 
             // Cuestionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(960, 739);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.labelFechaRegistro);
+            this.Controls.Add(this.comboBoxEsDeterminante);
+            this.Controls.Add(this.domainUpDown1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.labelInfo);
@@ -372,7 +406,6 @@
             this.Controls.Add(this.textBoxValorMaximo);
             this.Controls.Add(this.textBoxValorMinimo);
             this.Controls.Add(this.textBoxValorRespuesta);
-            this.Controls.Add(this.textBoxEsDeterminante);
             this.Controls.Add(this.textBoxNumOrden);
             this.Controls.Add(this.comboBoxIdRespuesta);
             this.Controls.Add(this.comboBoxIdConcepto);
@@ -401,7 +434,6 @@
         private System.Windows.Forms.ComboBox comboBoxIdConcepto;
         private System.Windows.Forms.ComboBox comboBoxIdRespuesta;
         private System.Windows.Forms.TextBox textBoxNumOrden;
-        private System.Windows.Forms.TextBox textBoxEsDeterminante;
         private System.Windows.Forms.TextBox textBoxValorRespuesta;
         private System.Windows.Forms.TextBox textBoxValorMinimo;
         private System.Windows.Forms.TextBox textBoxValorMaximo;
@@ -425,6 +457,10 @@
         private System.Windows.Forms.Label labelInfo;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DomainUpDown domainUpDown1;
+        private System.Windows.Forms.ComboBox comboBoxEsDeterminante;
+        private System.Windows.Forms.Label labelFechaRegistro;
+        private System.Windows.Forms.Label label16;
     }
 }
 

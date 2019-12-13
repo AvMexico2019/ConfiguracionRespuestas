@@ -2305,6 +2305,7 @@ warning 6002: The table/view 'ArrendamientoInmueble.dbo.Vw_QlikContratoArren' do
         <Function Name="HexDump" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="regex" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="InicializaSandBox" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NextFolioUnivertsal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NoUtiliAuditoria2019P" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SelloDigitalContratos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
@@ -5202,6 +5203,7 @@ FROM [dbo].[Vw_QlikContratoArren] AS [Vw_QlikContratoArren]</DefiningQuery>
             <Parameter Name="FolioContrato" Mode="In" Type="Int32" />
             <Parameter Name="TipoCaso" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="InicializaSandBox" />
           <FunctionImport Name="NextFolioUnivertsal" ReturnType="Collection(Int64)" />
           <FunctionImport Name="NoUtiliAuditoria2019P" ReturnType="Collection(ArrendamientoInmuebleModel.NoUtiliAuditoria2019P_Result)" />
           <FunctionImport Name="SP_ActualizaCat_ParametroRUSP">
@@ -7462,6 +7464,7 @@ FROM [dbo].[Vw_QlikContratoArren] AS [Vw_QlikContratoArren]</DefiningQuery>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="ActualizaRUSP" FunctionName="ArrendamientoInmuebleModel.Store.ActualizaRUSP" />
+          <FunctionImportMapping FunctionImportName="InicializaSandBox" FunctionName="ArrendamientoInmuebleModel.Store.InicializaSandBox" />
           <FunctionImportMapping FunctionImportName="NextFolioUnivertsal" FunctionName="ArrendamientoInmuebleModel.Store.NextFolioUnivertsal" />
           <FunctionImportMapping FunctionImportName="NoUtiliAuditoria2019P" FunctionName="ArrendamientoInmuebleModel.Store.NoUtiliAuditoria2019P">
             <ResultMapping>

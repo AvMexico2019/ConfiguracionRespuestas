@@ -120,6 +120,11 @@ namespace ConfiguracionRespuestas
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ActualizaRUSP", folioContratoParameter, tipoCasoParameter);
         }
     
+        public virtual int InicializaSandBox()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InicializaSandBox");
+        }
+    
         public virtual ObjectResult<Nullable<long>> NextFolioUnivertsal()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("NextFolioUnivertsal");
