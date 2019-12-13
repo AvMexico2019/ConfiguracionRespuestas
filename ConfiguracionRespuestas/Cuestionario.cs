@@ -14,21 +14,28 @@ namespace ConfiguracionRespuestas
 
     public partial class Cuestionario : Form
     {
+        class MyConcepto
+        {
+            public int Indice;
+            public Concepto1 concepto1;
+        }
+
         List<ListTema> temas = new List<ListTema>();
-        List<Concepto1> conceptos = new List<Concepto1>();
+        List<MyConcepto> conceptos = new List<MyConcepto>();
         List<Respuesta1> respuestas = new List<Respuesta1>();
+        List<Rel_ConceptoRespValor1> ListaPreguntasTema = new List<Rel_ConceptoRespValor1>();
         ListTema TemaSeleccionado;
         
-        private int Reg_IdInstitucion
+        private Nullable<int> Reg_IdInstitucion
         {
             get
             {
-                if (textBoxIdInstitucion.Text.Equals(""))
-                    return 1;
+                if (textBoxIdInstitucion.Text.Equals("NULL"))
+                    return null;
                 else
                     return int.Parse(textBoxIdInstitucion.Text);
             }
-            set { textBoxIdInstitucion.Text = value.ToString(); }
+            set { textBoxIdInstitucion.Text = value == null ? "NULL" :  value.ToString(); }
         }
 
         private int Reg_IdTema
@@ -50,9 +57,12 @@ namespace ConfiguracionRespuestas
                 if (comboBoxIdConcepto.SelectedIndex == -1)
                     return -1;
                 else
-                    return conceptos.Find(c => c.DescripcionConcepto.Equals(GetSItem(comboBoxIdConcepto.SelectedText))).IdConcepto;
+                    return conceptos.Find(c => c.concepto1.DescripcionConcepto.Equals(GetSItem(comboBoxIdConcepto.SelectedText))).concepto1.IdConcepto;
             }
-            set { comboBoxIdConcepto.SelectedItem = comboBoxIdConcepto.Items.IndexOf(conceptos.Find(r => r.IdConcepto == value).DescripcionConcepto); }
+            set
+            {
+                comboBoxIdConcepto.SelectedIndex = conceptos.Find(r => r.concepto1.IdConcepto == value).Indice;
+            }
         }
 
         private int Reg_IdRespuesta
@@ -64,7 +74,7 @@ namespace ConfiguracionRespuestas
                 else
                     return respuestas.Find(r => r.DescripcionRespuesta.Equals(comboBoxIdRespuesta.SelectedText)).IdRespuesta;
             }
-            set { comboBoxIdRespuesta.SelectedItem = comboBoxIdRespuesta.Items.IndexOf(respuestas.Find(r => r.IdRespuesta == value).DescripcionRespuesta); }
+            set { comboBoxIdRespuesta.SelectedIndex = comboBoxIdRespuesta.Items.IndexOf(respuestas.Find(r => r.IdRespuesta == value).DescripcionRespuesta); }
         }
 
         private decimal Reg_NumOrden
@@ -93,19 +103,19 @@ namespace ConfiguracionRespuestas
                         return false;
                 }
             }
-            set { comboBoxEsDeterminante.SelectedItem = comboBoxEsDeterminante.Items.IndexOf(value.ToString()); }
+            set { comboBoxEsDeterminante.SelectedIndex = comboBoxEsDeterminante.Items.IndexOf(value); }
         }
 
-        private decimal Reg_ValorRespuesta
+        private Nullable<decimal> Reg_ValorRespuesta
         {
             get
             {
-                if (textBoxValorRespuesta.Text.Equals(""))
-                    return (decimal)-1.0;
+                if (textBoxValorRespuesta.Text.Equals("NULL"))
+                    return null;
                 else
                     return Convert.ToDecimal(textBoxValorRespuesta.Text);
             }
-            set { textBoxValorRespuesta.Text = value.ToString(); }
+            set { textBoxValorRespuesta.Text = value == null ? "NULL" : value.ToString(); }
         }
 
         private decimal Reg_ValorMinimo
@@ -132,15 +142,15 @@ namespace ConfiguracionRespuestas
             set { textBoxValorMaximo.Text = value.ToString(); }
         }
 
-        private string Reg_Comentario
+        private String Reg_Comentario
         {
             get
             {
-                return textBoxComentario.Text;
+                return textBoxComentario.Text.Equals("NULL") ? "" : textBoxComentario.Text;
             }
             set
             {
-                textBoxComentario.Text = value;
+                textBoxComentario.Text = value == null ? "NULL" : value;
             }
         }
 
@@ -158,7 +168,7 @@ namespace ConfiguracionRespuestas
                         return false;
                 }
             }
-            set { comboBoxEstatusRegistro.SelectedItem = comboBoxEstatusRegistro.Items.IndexOf(value.ToString()); }
+            set { comboBoxEstatusRegistro.SelectedIndex = comboBoxEstatusRegistro.Items.IndexOf(value); }
         }
 
         private int Reg_IdUsuarioRegistro
@@ -170,7 +180,7 @@ namespace ConfiguracionRespuestas
                 else
                     return int.Parse(comboBoxIdUsuarioRegistro.SelectedText);
             }
-            set { comboBoxIdUsuarioRegistro.SelectedItem = comboBoxIdUsuarioRegistro.Items.IndexOf(value); }
+            set { comboBoxIdUsuarioRegistro.SelectedIndex = comboBoxIdUsuarioRegistro.Items.IndexOf(value); }
         }
 
         private System.DateTime Reg_FechaRegistro
@@ -194,6 +204,7 @@ namespace ConfiguracionRespuestas
             TemaSeleccionado = null;
 
             ArrendamientoInmuebleEntities ctx = new ArrendamientoInmuebleEntities();
+
             temas = (from tema in ctx.Cat_Tema1
                      select new ListTema { IdTema = tema.IdTema, Descripcion = tema.DescripcionTema }).ToList();
             int comboBoxIndex = 0;
@@ -205,9 +216,10 @@ namespace ConfiguracionRespuestas
 
             var result = from concepto in ctx.Concepto1
                          select concepto;
+            int ConceptoIndice = 0;
             foreach (var concepto in result)
             {
-                conceptos.Add(concepto);
+                conceptos.Add(new MyConcepto {Indice = ConceptoIndice++, concepto1 = concepto });
                 comboBoxIdConcepto.Items.Add(concepto.IdConcepto + " - " + concepto.DescripcionConcepto);
             }
 
@@ -261,12 +273,14 @@ namespace ConfiguracionRespuestas
 
         }
 
-        private void ShowCuestionario(List<Rel_ConceptoRespValor> cuestionario)
+        private void ShowCuestionario(List<Rel_ConceptoRespValor1> cuestionario)
         {
+            ListaPreguntasTema.Clear();
             listBoxPreguntas.Items.Clear();
             foreach(var pregunta in cuestionario)
             {
-                listBoxPreguntas.Items.Add(pregunta.NumOrden + " - " + conceptos.Find(c => c.IdConcepto == pregunta.Fk_IdConcepto).DescripcionConcepto);
+                ListaPreguntasTema.Add(pregunta);
+                listBoxPreguntas.Items.Add(pregunta.NumOrden + " - " + conceptos.Find(c => c.concepto1.IdConcepto == pregunta.Fk_IdConcepto).concepto1.DescripcionConcepto);
             }
         }
 
@@ -275,7 +289,7 @@ namespace ConfiguracionRespuestas
             TemaSeleccionado = temas.Find(t => t.comboBoxIndex == comboBoxTema.SelectedIndex);
             ArrendamientoInmuebleEntities ctx = new ArrendamientoInmuebleEntities();
             int tema = TemaSeleccionado.IdTema;
-            List<Rel_ConceptoRespValor> cuestionario = (from pregunta in ctx.Rel_ConceptoRespValor
+            List<Rel_ConceptoRespValor1> cuestionario = (from pregunta in ctx.Rel_ConceptoRespValor1
                                                         where pregunta.Fk_IdTema == tema
                                                         orderby pregunta.Fk_IdTema, pregunta.NumOrden
                                                         select pregunta).ToList();
@@ -335,7 +349,20 @@ namespace ConfiguracionRespuestas
 
         private void listBoxPreguntas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var RespuestaEscogida = listBoxPreguntas.SelectedItem;
+            Rel_ConceptoRespValor1 pregunta = ListaPreguntasTema[listBoxPreguntas.SelectedIndex];
+            Reg_IdInstitucion = pregunta.Fk_IdInstitucion;
+            Reg_IdTema = pregunta.Fk_IdTema;
+            Reg_IdConcepto = pregunta.Fk_IdConcepto;
+            Reg_IdRespuesta = pregunta.Fk_IdRespuesta;
+            Reg_NumOrden = pregunta.NumOrden;
+            Reg_EsDeterminante = pregunta.EsDeterminante;
+            Reg_ValorRespuesta = pregunta.ValorRespuesta;
+            Reg_ValorMinimo = pregunta.ValorMinimo;
+            Reg_ValorMaximo = pregunta.ValorMaximo;
+            Reg_Comentario = pregunta.Comentario;
+            Reg_EstatusRegistro = pregunta.EstatusRegistro;
+            Reg_IdUsuarioRegistro = pregunta.Fk_IdUsuarioRegistro;
+            Reg_FechaRegistro = pregunta.FechaRegistro;
         }
 
         private void ClearRegistro()
