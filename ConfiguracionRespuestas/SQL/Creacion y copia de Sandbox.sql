@@ -6,7 +6,6 @@ go
 --drop table [SandBox].[Respuesta]
 --drop SCHEMA SandBox
 
-
 IF NOT EXISTS (
 	SELECT  schema_name
 		FROM    information_schema.schemata
@@ -168,20 +167,17 @@ begin
 			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 			) ON [PRIMARY];
 
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [R_127] FOREIGN KEY([Fk_IdRespuesta])
-			REFERENCES [SandBox].[Respuesta] ([IdRespuesta]);
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [SB_R_84] FOREIGN KEY([Fk_IdConcepto])
+			REFERENCES [SandBox].[Concepto] ([IdConcepto])
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [SB_R_84]
 
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [R_127];
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [SB_R_128] FOREIGN KEY([Fk_IdTema])
+			REFERENCES [SandBox].[Cat_Tema] ([IdTema])
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [SB_R_128]
 
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [R_128] FOREIGN KEY([Fk_IdTema])
-			REFERENCES [SandBox].[Cat_Tema] ([IdTema]);
-
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [R_128];
-
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [R_84] FOREIGN KEY([Fk_IdConcepto])
-			REFERENCES [SandBox].[Concepto] ([IdConcepto]);
-
-			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [R_84];
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor]  WITH CHECK ADD  CONSTRAINT [SB_R_127] FOREIGN KEY([Fk_IdRespuesta])
+			REFERENCES [SandBox].[Respuesta] ([IdRespuesta])
+			ALTER TABLE [SandBox].[Rel_ConceptoRespValor] CHECK CONSTRAINT [SB_R_127]
 
 		commit tran 
 	end try
